@@ -1,4 +1,5 @@
 (define-module (planner)
+  #:use-module (gnu packages calendar)
   #:use-module (gnu packages cmake)
   #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages gettext)
@@ -9,6 +10,7 @@
   #:use-module (gnu packages package-management)
   #:use-module (gnu packages pantheon)
   #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages webkit)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages)
   #:use-module (guix build-system meson)
@@ -45,7 +47,11 @@
        ("granite" ,granite)
        ("glib" ,glib)
        ("gtk" ,gtk+)
-       ("libgee" ,libgee)))
+       ("json-glib" ,json-glib)
+       ("libgee" ,libgee)
+       ("libical" ,libical)
+       ("libsoup" ,libsoup-minimal)
+       ("webkitgtk" ,webkitgtk)))
     (native-inputs
      `(("cmake" ,cmake)
        ("glib:bin" ,glib "bin") ; for glib-compile-schemas
