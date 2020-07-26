@@ -41,7 +41,8 @@
              (setenv "DESTDIR" "/")
              #t)))))
     (inputs
-     `(("granite" ,granite)
+     `(("evolution-data-server" ,evolution-data-server)
+       ("granite" ,granite)
        ("glib" ,glib)
        ("gtk" ,gtk+)
        ("libgee" ,libgee)))
