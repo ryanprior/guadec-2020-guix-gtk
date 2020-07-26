@@ -1,17 +1,12 @@
 #+TITLE: Packaging GTK Apps in Guix
 
-* Intro
 
-This is "Packaging GTK Apps in Guix"
-
-Your facilitator is Ryan Prior
+Your facilitator is Ryan Prior:
 - Guix maintainer
 - elementary OS community contributor
 - https://www.ryanprior.com
 
-* Tools necessary to follow along
-
-** Workshop overview
+* Workshop Overview
 
 This is a technical workshop. As a participant you will have the opportunity to:
 
@@ -19,7 +14,7 @@ This is a technical workshop. As a participant you will have the opportunity to:
 - use Guix to create runtime environments
 - read & write code
 
-** Prerequisites
+* Prerequisites
 
 If you want to follow along, you should install these tools:
 
@@ -40,8 +35,6 @@ If you want to see the end result instead of following along step-by-step, omit
 
 * Why Guix?
 
-** The vision
-
 We want a computing experience that's carefree:
 
 - Reliable, predictable behavior
@@ -49,7 +42,7 @@ We want a computing experience that's carefree:
 - Composable & flexible
 - Safe for experimentation
 
-** Guix delivers
+* Guix delivers
 
 Carefree computing:
 
@@ -58,7 +51,7 @@ Carefree computing:
 - Seamless, accessible composition and flexible scripting
 - Experimentation without side-effects, or with roll-back
 
-** Testimonial
+* Testimonial
 
 #+BEGIN_QUOTE
 I still pity myself for having hesitated for so long to just dive into guix.
@@ -67,7 +60,12 @@ Made my hacking carefree. —André Batista (madage)
 
 * Where does Guix fit?
 
-** Overview of how Guix works
+Is Guix trying to replace Flatpak or Docker? -no.
+
+Let's review how Guix works and how it compares to those complimentary
+technologies.
+
+* Overview of how Guix works
 
 - Guix builds packages from source
 - Users build from source or download binaries from a trusted substitute
@@ -76,14 +74,15 @@ Made my hacking carefree. —André Batista (madage)
 - Containers are optional (user's preference)
 - Changes the environment by modifying ~PATH~ and similar variables
 
-** Guix and Flatpak
+* Guix and Flatpak
 
 Flatpak has end-user focus: tools and apps, not libraries or services. Guix
 packages can be tools and apps, but can also be libraries, services, or data.
 
-Composition of Flatpaks is mostly via D-Bus, while Guix packages can compose seamlessly.
+Composition of Flatpaks is mostly via D-Bus, while Guix packages can compose
+seamlessly.
 
-** Guix and Docker
+* Guix and Docker
 
 Docker is focused on tools and services, not apps or libraries. Guix can output
 container images compatible with Docker, so you can define a service in Guix and
@@ -92,7 +91,7 @@ deploy it anywhere.
 Composition of Docker containers is mostly via HTTP, while Guix packages can
 compose seamlessly.
 
-** More about composition
+* More about composition
 
 In general you can't take two Flatpaks, or two Docker containers, and just merge
 them. They aren't designed to be mutually compatible that way.
@@ -104,9 +103,7 @@ You can:
 - compose Guix packages with ~deb~, ~rpm~, ~apk~ packages
 - use Guix packages on systems that don't have Guix installed
 
-* How Guix describes a package
-
-** Parts of a Guix package
+* Parts of a Guix package
 
 A Guix package decription consists of:
 
@@ -117,7 +114,7 @@ A Guix package decription consists of:
 Inputs are stored with hashes to avoid using an input that's been accidentally
 (or maliciously) altered.
 
-** What a Guix package looks like
+* What a Guix package looks like
 
 (Paren warning: a package is defined using Guile scheme.)
 
@@ -128,11 +125,11 @@ Here's an example:
   (package
     (name "gnome-menus")
     (version "3.32.0")
-    ;; [snip; we'll revisit this later]
+    ;; [snip—we'll revisit this soon]
 ))
 #+END_SRC
 
-** Where to find Guix package definitions
+* Where to find Guix package definitions
 
 All the packages in upstream Guix—14k and counting!—are stored in the Guix source
 code repository.
@@ -150,7 +147,12 @@ Some especially relevant ones:
 
 * Let's look at some Guix packages
 
-** gnome-menus
+We'll look at 3 packages to gain some familiarity:
+- ~gnome-menus~, a snack-size library package to get us started
+- Seahorse, a handy GTK application; part of GNOME
+- Sideload, a Pantheon (GTK/Granite) package; part of elementary OS
+
+* gnome-menus
 
 - a library package for libgnome-menu
 - uses "GNU build system" which means ~configure~, ~make~, ~make check~, ~make install~
@@ -162,7 +164,7 @@ Things you can do:
 | install for your user       | ~guix install gnome-menus~ |
 | see info without installing | ~guix show gnome-menus~    |
 
-** Seahorse
+* Seahorse
 
 - a GNOME (GTK) application for handling keys and passwords
 - uses "Meson build system" 
@@ -175,7 +177,7 @@ Things you can do:
 | install for your user   | ~guix install seahorse~                          |
 | run without installing  | ~guix environment --ad-hoc seahorse -- seahorse~ |
 
-** Sideload
+* Sideload
 
 - a Granite (GTK) application from elementary OS
 - uses "Meson build system" again
@@ -190,7 +192,12 @@ Things you can do:
 
 * Let's create a Guix package
 
-** Planner
+Now that we're more familiar with Guix packages, let's create one.
+
+We're going to package Planner, a GTK/Granite application that's part of the
+elementary AppCenter.
+
+* Planner
 
 - a Granite (GTK) application from the elementary AppCenter
 - link: https://planner-todo.web.app/
@@ -202,7 +209,7 @@ Let's get started!
 2. change the package name to planner
 3. try to build: ~guix build -L. planner~
 
-*** package: unbound variable
+* package: unbound variable
 
 #+BEGIN_EXAMPLE
 ryan@swallowtail:~/dev/workshop/guadec-2020-guix-gtk$ guix build -L. planner
@@ -215,7 +222,7 @@ guix build: error: planner: unknown package
 4. copy module header from pantheon.scm
 5. build again: ~guix build -L. planner~
 
-*** failed to load '(planner)'
+* failed to load '(planner)'
 
 #+BEGIN_EXAMPLE
 ryan@swallowtail:~/dev/workshop/guadec-2020-guix-gtk$ guix build -L. planner
@@ -235,7 +242,7 @@ hint: Did you forget a `use-modules' form?
 7. use the ~gnu packages pantheon~ module
 8. build again: ~guix build -L. planner~
 
-*** successfully built
+* successfully built
 
 Finally, a success! Now on to the next target: actually building Planner.
 
@@ -248,7 +255,7 @@ successfully built /gnu/store/2n3vncz07bmsrjk1mlmzag96s3r94f7v-planner-1.5.5.drv
 10. change the version to the latest Planner release: ~2.4.6~
 11. build again: ~guix build -L. planner~
 
-*** hash mismatch
+* hash mismatch
 
 #+BEGIN_EXAMPLE
 r:sha256 hash mismatch for /gnu/store/g92sdba0gg14ginrlbypz9b439209xjz-planner-2.4.6-checkout:
@@ -271,7 +278,7 @@ We could just trust the "actual hash" but let's be skeptical:
 14. put the hash into our package definition
 15. build again: ~guix build -L. planner~
 
-*** libecal
+* libecal
 
 #+BEGIN_EXAMPLE
 Run-time dependency libecal-2.0 found: NO (tried pkgconfig and cmake)
@@ -289,7 +296,7 @@ Run-time dependency libecal-2.0 found: NO (tried pkgconfig and cmake)
 19. add ~evolution-data-server~ to our inputs
 20. build again: ~guix build -L. planner~
 
-*** json-glib
+* json-glib
 
 #+BEGIN_EXAMPLE
 Run-time dependency json-glib-1.0 found: NO (tried pkgconfig and cmake)
@@ -303,7 +310,7 @@ Run-time dependency json-glib-1.0 found: NO (tried pkgconfig and cmake)
 22. add ~json-glib~ to our inputs
 23. build again: ~guix build -L. planner~
 
-*** more inputs
+* more inputs
 
 We can follow the same workflow to find more, and we can also read ~meson.build~
 for information about dependencies.
@@ -315,7 +322,7 @@ for information about dependencies.
 25. use ~gnu packages calendar~ and ~gnu packages webkit~ modules
 26. build again: ~guix build -L. planner~
 
-*** successfully built
+* successfully built
 
 #+BEGIN_EXAMPLE
 successfully built /gnu/store/gjh5jgnhak94r5az7nczhsjpyn5a84sx-planner-2.4.6.drv
@@ -324,10 +331,10 @@ successfully built /gnu/store/gjh5jgnhak94r5az7nczhsjpyn5a84sx-planner-2.4.6.drv
 
 It builds now! [jazz music gets louder]
 
-27. run planner: \\
-~guix environment -L. --pure planner --ad-hoc planner -- com.github.alainm23.planner~
+27. run planner:
+    ~guix environment -L. --pure planner --ad-hoc planner -- com.github.alainm23.planner~
 
-*** org.gnome.desktop.interface
+* org.gnome.desktop.interface
 
 #+BEGIN_EXAMPLE
 $ guix environment -L. --pure planner --ad-hoc planner -- com.github.alainm23.planner
@@ -344,7 +351,7 @@ We soon discover that just because it builds doesn't mean it's packaged correctl
     ~guix environment -L. --pure planner --ad-hoc planner -- com.github.alainm23.planner~
     (note: no need for an explicit rebuild, Guix will do that for us)
 
-*** missing the theme
+* missing the theme
 
 Planner now runs! But… it doesn't look right. Icons are missing and colors are
 off. It turns out that Planner, being an app designed for elementary OS, assumes
@@ -360,6 +367,21 @@ them that I've been testing.
 31. add those as inputs & use the `xorg` and `inkscape` modules
 32. run planner again
 
-*** success
+* Success!
 
 Now Planner runs *and* renders correctly!
+
+Next steps left as exercise for participants:
+- update the rest of the package data
+- investigate whether some inputs are unneeded at runtime (or at all)
+- move those inputs to ~native-inputs~ (or remove them)
+- lint your package (~guix help lint~)
+- create a repo for your Guix packages & publish it there
+- join the #guix channel on Freenode
+- follow my social media (linked on my website)
+- create another package!
+
+Links:
+- Your facilitator :: https://www.ryanprior.com
+- This talk :: https://github.com/ryanprior/guadec-2020-guix-gtk
+- Guix :: https://guix.gnu.org/
