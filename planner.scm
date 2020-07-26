@@ -46,6 +46,7 @@
      `(("evolution-data-server" ,evolution-data-server)
        ("granite" ,granite)
        ("glib" ,glib)
+       ("gsettings-desktop-schemas" ,gsettings-desktop-schemas)
        ("gtk" ,gtk+)
        ("json-glib" ,json-glib)
        ("libgee" ,libgee)
