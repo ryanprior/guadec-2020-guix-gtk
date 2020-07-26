@@ -1,4 +1,4 @@
-(define-module (gnu packages pantheon)
+(define-module (planner)
   #:use-module (gnu packages cmake)
   #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages gettext)
@@ -7,6 +7,7 @@
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages package-management)
+  #:use-module (gnu packages pantheon)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages)
