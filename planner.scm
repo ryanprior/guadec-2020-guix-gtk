@@ -1,3 +1,21 @@
+(define-module (gnu packages pantheon)
+  #:use-module (gnu packages cmake)
+  #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages gettext)
+  #:use-module (gnu packages glib)
+  #:use-module (gnu packages gnome)
+  #:use-module (gnu packages gnupg)
+  #:use-module (gnu packages gtk)
+  #:use-module (gnu packages package-management)
+  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages xml)
+  #:use-module (gnu packages)
+  #:use-module (guix build-system meson)
+  #:use-module (guix git-download)
+  #:use-module ((guix licenses) :prefix license:)
+  #:use-module (guix packages)
+  #:use-module (guix utils))
+
 (define-public planner
   (package
     (name "planner")
