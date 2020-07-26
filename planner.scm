@@ -20,12 +20,12 @@
 (define-public planner
   (package
     (name "planner")
-    (version "1.5.5")
+    (version "2.4.6")
     (source
      (origin
        (method git-fetch)
        (uri (git-reference
-             (url "https://github.com/elementary/calculator")
+             (url "https://github.com/alainm23/planner.git")
              (commit version)))
        (file-name (git-file-name name version))
        (sha256
