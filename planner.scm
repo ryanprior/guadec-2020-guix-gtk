@@ -1,6 +1,6 @@
-(define-public pantheon-calculator
+(define-public planner
   (package
-    (name "pantheon-calculator")
+    (name "planner")
     (version "1.5.5")
     (source
      (origin
